@@ -20,9 +20,6 @@ shit.model.load_weights(shit_weights)
 
 st.set_page_config(page_title='Syllabify', page_icon=':pencil2:')
 
-import time
-import re
-
 onsets = ['bl', 'br', 'cl', 'cr', 'dr', 'fl', 'fr', 'gl', 'gr', 'pl', 'pr', 'sk', 'sl', 'sm', 'sn',
      'sp', 'st', 'str', 'sw', 'tr', 'ch', 'sh', 'm', 'c', 'b', 'r', 'd', 'h', 's', 'p', 'l', 'g', 'f', 'w', 't', 'k', 'n', 'v', 'st', 'pr', 'j', 'br', 'ch', 'gr', 'sh',
   'tr', 'cr', 'fr', 'z', 'sp', 'wh', 'cl', 'y', 'bl', 'th', 'fl', 'sch', 'pl', 'q', 'dr', 'str', 'sc', 'sl', 'kr', 'sw', 'gl',
@@ -78,7 +75,7 @@ def to_categorical(sequences, length):
         return np.array(cat_sequences)
 
 def main():
-    st.write('<style>body {background-color: #fce0ff; justify-content: center; height: 100vh;}</style>', unsafe_allow_html=True)
+    st.write('<style>body {background-color: #fce0ff; justify-content: center; align-items: center; height: 100vh;}</style>', unsafe_allow_html=True)
 
     st.write("""
         <style>
@@ -90,15 +87,15 @@ def main():
         """, unsafe_allow_html=True)
 
     st.write('<div style="display: flex; flex-direction: column; align-items: center;">', unsafe_allow_html=True)
-    st.write('<h1 style="color: #333">Machine Syllabification</h1>', unsafe_allow_html=True)
+    st.write('<h1 style="color: #333; font-size: 30px;">Machine Syllabification, Grapheme Identification, and Phonification</h1>', unsafe_allow_html=True)
 
-    input_data = st.text_input('Enter text to be syllabified', max_chars=45)
+    input_data = st.text_input('Enter a word or pseudo-word to be syllabified.', max_chars=45)
 
     syllabify_button = st.button('Syllabify')
 
     if not re.match("^[a-zA-Z ]*$", input_data):
         with st.spinner("Please enter only alphabetic characters."):
-            time.sleep(1)
+            time.sleep(0.5)
         st.empty()
     else:
         if syllabify_button:
@@ -106,6 +103,7 @@ def main():
             st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{prediction}</div>", unsafe_allow_html=True)
             nuclei_onsets = '-'.join([onc_split(x).strip('-') for x in prediction.split('-')]).split('-')
             if "the rizzlord" not in nuclei_onsets:
+                st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{'-'.join(nuclei_onsets)}</div>", unsafe_allow_html=True)
                 phon_prediction = ''.join(shit.ipafy(nuclei_onsets))
                 st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{phon_prediction}</div>", unsafe_allow_html=True)
             else:
