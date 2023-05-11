@@ -3,6 +3,7 @@ import re
 from model import sp_syllabler, onc_to_phon
 import pickle
 import time
+from ussy import Ussy
 
 piss_len = 45
 shit_len = 19
@@ -17,6 +18,8 @@ shit = onc_to_phon(shit_e2i, shit_d2i, shit_len, 128, 500)
 
 piss.model.load_weights(piss_weights)
 shit.model.load_weights(shit_weights)
+
+Ussy = Ussy(3, piss, shit)
 
 st.set_page_config(page_title='Syllabify', page_icon=':pencil2:')
 
@@ -76,7 +79,6 @@ def to_categorical(sequences, length):
 
 def main():
     st.write('<style>body {background-color: #fce0ff; justify-content: center; align-items: center; height: 100vh;}</style>', unsafe_allow_html=True)
-
     st.write("""
         <style>
         div.Widget.row-widget.stRadio > div {
@@ -108,12 +110,24 @@ def main():
                 st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{phon_prediction}</div>", unsafe_allow_html=True)
             else:
                 st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronouncable word.</div>", unsafe_allow_html=True)
+    
+    st.write('<h1 style="color: #333; font-size: 30px;">Ussification</h1>', unsafe_allow_html=True)
+    ussify_input = st.text_input('Enter text to ussify.')
+    ussify_button = st.button('Ussify')
+    
+    if ussify_button:
+        ussified_text = Ussy.ussify(ussify_input)
+        if ussified_text:
+            st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{ussified_text}</div>", unsafe_allow_html=True)
+        else:
+            st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{'cannot ussify'}</div>", unsafe_allow_html=True)
 
 
     while not syllabify_button:
         time.sleep(0.1)
 
     st.write('<style>.streamlit-button{opacity: 1 !important;}</style>', unsafe_allow_html=True)
-            
+
+
 if __name__ == '__main__':
     main()
