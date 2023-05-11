@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syllabify</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(252, 164, 238);
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        #result {
+            margin-bottom: 20px;
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: rgb(252, 164, 238);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgba(252, 164, 238, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('predict_syl') }}">
+    <div id="result" value="Waiting for Input...">{{ prediction if prediction else 'Waiting for Input...' }}</div>
+    <input type="text" name="input_data" placeholder="Enter an English word..." oninput="this.value = this.value.replace(/[^a-z]/gi, '').toLowerCase();" maxlength="45" value="{{ input_data }}">
+    <input type="submit" value="Syllabify">
+</form>
+</body>
+</html>
