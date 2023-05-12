@@ -10,7 +10,7 @@ nuclei = ['a', 'e', 'i', 'o', 'u', 'oo', 'ia', 'ie', 'ee', 'io', 'au', 'ea', 'ou
           'ay', 'ey','ah','eh','oh','oy', 'aigh', 'igh', 'eigh', 'aw', 'ow', 'ew', 'ye', 'ooh', 'owe', 'awe', 'ore', 'er', 'or', 'ere', 
           'are', 'ar', 'ur', 'ir', 'ire', 'ue', 'eye', 'aye', 'ye', 'uy']
 
-coda = ['ct', 'ft', 'mp', 'nd', 'ng', 'nk', 'nt', 'pt', 'sk', 'sp', 'ss', 'st', 'ch', 'sh', 's', 'n', 'r', 'd', 'ng', 'l', 'rs', 'ns', 't', 'm', 'll', 'nt', 'c', 'ck', 'st', 'k', 'ss', 'sts', 'rd', 'nd',
+codas = ['ct', 'ft', 'mp', 'nd', 'ng', 'nk', 'nt', 'pt', 'sk', 'sp', 'ss', 'st', 'ch', 'sh', 's', 'n', 'r', 'd', 'ng', 'l', 'rs', 'ns', 't', 'm', 'll', 'nt', 'c', 'ck', 'st', 'k', 'ss', 'sts', 'rd', 'nd',
   'ry', 'rt', 'w', 'lly', 'tt', 'ch', 'ts', 'ty', 'p', 'ls', 'ld', 'nts', 'x', 'rg', 'sh', 'ly', 'th', 'ff', 'g', 'rn', 'ngs',
   'nn', 'tz', 'sm', 'gh', 'ms', 'z', 'cs', 'ps', 'ds', 'b', 'lt', 'nk', 'nds', 'ys', 'rk', 'ght', 'v', 'cks', 'f', 'ct',
   'rth', 'rry', 'lls', 'ny', 'ws', 'cts', 'wn', 'rds', 'dy', 'bly', 'rts', 'ft', 'hl', 'gy', 'pp', 'rly', 'mp', 'ntly',
@@ -20,10 +20,10 @@ onsets = sorted(sorted(set(onsets)),key=len, reverse=True)
 
 nuclei = sorted(sorted(set(nuclei)),key=len, reverse=True)
 
-coda = sorted(sorted(set(coda)),key=len, reverse=True)
+codas = sorted(sorted(set(codas)),key=len, reverse=True)
 
 def onc_split(word):
-    global onsets, nuclei, coda, used_onsets, used_nuclei, used_coda, unidentified_words
+    global onsets, nuclei, codas, used_onsets, used_nuclei, used_coda, unidentified_words
     for i in onsets:
         if word.startswith(i):
             i_less = word.replace(i, '', 1)
@@ -48,7 +48,7 @@ class Ussy():
         self.piss = piss
         self.shit = shit
         self.min_len = min_len
-        self.explosive_list = ['m', 'p', 'r', 'b', 't', 'k', 'f', 'l', ':']
+        self.explosive_list = ['m', 'p', 'r', 'b', 't', 'k', 'f', 'l', ':','ɹ']
 
     def ussify(self, word):
         oncs, phons = self.conv_ipa(word)
@@ -63,7 +63,7 @@ class Ussy():
 
     def conv_ipa(self, word):
         prediction = self.piss.syllabify(word)
-        nuclei_onsets = '-'.join([onc_split(x).strip('-') for x in prediction.split('-')]).split('-')
+        nuclei_onsets = '-'.join([onc_split(x.lower()).strip('-') for x in prediction.split('-')]).split('-')
         if "the rizzlord" not in nuclei_onsets:
             phon_prediction = self.shit.ipafy(nuclei_onsets)
             return nuclei_onsets, phon_prediction
