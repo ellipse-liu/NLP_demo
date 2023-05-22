@@ -65,7 +65,7 @@ def onc_split(word):
                 elif n in word:
                     onset, coda = word.split(n, 1)
                     return '-'.join([onset, n, coda])
-    return "the rizzlord"
+    return "the rizzlord" + word
 
 def to_categorical(sequences, length):
         cat_sequences = []
@@ -104,7 +104,7 @@ def main():
             prediction = piss.syllabify(input_data)
             st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{prediction}</div>", unsafe_allow_html=True)
             nuclei_onsets = '-'.join([onc_split(x).strip('-') for x in prediction.split('-')]).split('-')
-            if "the rizzlord" not in nuclei_onsets:
+            if not any("the rizzlord" in n for n in nuclei_onsets):
                 st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{'-'.join(nuclei_onsets)}</div>", unsafe_allow_html=True)
                 if len(nuclei_onsets) <= 19:
                     phon_prediction = ''.join(shit.ipafy(nuclei_onsets))
@@ -112,7 +112,7 @@ def main():
                 else:
                     st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>Too many graphemes to process</div>", unsafe_allow_html=True)
             else:
-                st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronouncable word.</div>", unsafe_allow_html=True)
+                st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronouncable word.= because of {[n.replace("the rizzlord", '') for n in nuclei_onsets if "the rizzlord" in n}</div>", unsafe_allow_html=True)
     
     st.write('<h1 style="color: #333; font-size: 30px;">Ussification</h1>', unsafe_allow_html=True)
     ussify_input = st.text_input('Enter text to ussify.',max_chars=45)
