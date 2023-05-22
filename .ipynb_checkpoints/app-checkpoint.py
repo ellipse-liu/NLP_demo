@@ -112,7 +112,7 @@ def main():
                 else:
                     st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>Too many graphemes to process</div>", unsafe_allow_html=True)
             else:
-                st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronounceable word. The modified nuclei_onsets: {[n.replace('the rizzlord', '') for n in nuclei_onsets if 'the rizzlord' in n]}</div>", unsafe_allow_html=True)
+                st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronounceable word. Because of syllable: {[n.replace('the rizzlord', '') for n in nuclei_onsets if 'the rizzlord' in n]}</div>", unsafe_allow_html=True)
     
     st.write('<h1 style="color: #333; font-size: 30px;">Ussification</h1>', unsafe_allow_html=True)
     ussify_input = st.text_input('Enter text to ussify.',max_chars=45)
