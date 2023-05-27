@@ -144,7 +144,7 @@ class onc_to_phon:
                 inted_ortho += [self.e2i[c]]
             except:
                 for a in c:
-                    inted_ortho += [self.e2i[a], self.e2i['u'],self.e2i['h']]
+                    inted_ortho += [self.e2i[a]]
             
         inted_ortho = pad_sequences([inted_ortho], maxlen=self.input_size, padding='post')[0]
         predicted = self.model.predict(inted_ortho.reshape(1, self.input_size, 1), verbose = 0)[0]
