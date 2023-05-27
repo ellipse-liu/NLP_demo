@@ -106,6 +106,7 @@ def main():
             nuclei_onsets = '-'.join([onc_split(x).strip('-') for x in prediction.split('-')]).split('-')
             if any("the rizzlord" in n for n in nuclei_onsets):
                 st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{input_data} is unlikely to be an English pronounceable word. Because of syllable: {[n.replace('the rizzlord', '') for n in nuclei_onsets if 'the rizzlord' in n]}</div>", unsafe_allow_html=True)
+                nuclei_onsets = [x.replace('the rizzlord', '') for x in nuclei_onsets]
                 
             st.write(f"<div style='font-size: 24px; margin-top: 20px; margin-bottom: 20px;'>{'-'.join(nuclei_onsets)}</div>", unsafe_allow_html=True)
             if len(nuclei_onsets) <= 19:
