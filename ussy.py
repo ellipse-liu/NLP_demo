@@ -48,7 +48,7 @@ class Ussy():
         self.piss = piss
         self.shit = shit
         self.min_len = min_len
-        self.explosive_list = ['m', 'p', 'r', 'b', 't', 'k', 'f', 'l','ɹ', 'dʒ']
+        self.explosive_list = ['m', 'p', 'r', 'b', 't', 'k', 'f', 'l','ɹ', 'dʒ','n','g']
 
     def ussify(self, word):
         oncs, phons = self.conv_ipa(word)
