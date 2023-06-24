@@ -81,6 +81,6 @@ class Ussy():
             phons.pop(i)
             oncs.pop(i)
             i -= 1
-            if(phons[i][-1] in self.explosive_list):
+            if any(phons[i].endswith(plosive) for plosive in self.explosive_list):
                 return ''.join(oncs) + "ussy"
         return False
